@@ -13,8 +13,14 @@
 
 @interface GJGCRecentChatViewController ()<UITableViewDelegate,UITableViewDataSource>
 
+/**
+ *  数据源
+ */
 @property (nonatomic,strong)NSMutableArray *sourceArray;
 
+/**
+ * 显示列表
+ */
 @property (nonatomic,strong)UITableView *listTable;
 
 @end
@@ -39,13 +45,11 @@
 
 #pragma mark - tableViewDelegate
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.sourceArray.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"CellIdentifier";
     
     GJGCRecentChatCell *recentCell = (GJGCRecentChatCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -60,13 +64,11 @@
     return recentCell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 75.f;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     GJGCRecentChatModel *contenModel = [self.sourceArray objectAtIndex:indexPath.row];
@@ -98,8 +100,8 @@
 
 #pragma mark - 数据
 
-- (void)initData
-{
+- (void)initData {
+    
     GJGCRecentChatModel *contact0 = [[GJGCRecentChatModel alloc]init];
     contact0.name = [GJGCRecentChatModel formateName:@"范冰冰"];
     contact0.headUrl = @"http://a4.att.hudong.com/86/42/300000876508131216423466864_950.jpg";
@@ -151,7 +153,6 @@
     [self.sourceArray addObject:contact5];
 
     [self.listTable reloadData];
-    
 }
 
 @end

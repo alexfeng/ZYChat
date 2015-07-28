@@ -9,8 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "GJGCRecentChatModel.h"
 
+/**
+ *  定制最近聊天cell
+ */
 @interface GJGCRecentChatCell : UITableViewCell
 
+/**
+ *  设置内容Model方法
+ *
+ *  @param contentModel 内容model对象
+ */
 - (void)setContentModel:(GJGCRecentChatModel *)contentModel;
 
 @end

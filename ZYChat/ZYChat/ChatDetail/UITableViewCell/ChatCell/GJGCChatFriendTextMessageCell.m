@@ -20,8 +20,7 @@
 
 @implementation GJGCChatFriendTextMessageCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self.contentInnerMargin = 11.f;
@@ -49,6 +48,11 @@
 
 #pragma mark - 点击电话响应
 
+/**
+ *  设置号码链接响应事件
+ *
+ *  @param phoneNumberArray 号码响应数组
+ */
 - (void)setupTouchEnventWithPhoneNumberArray:(NSArray *)phoneNumberArray
 {
     if (!phoneNumberArray) {
@@ -66,16 +70,20 @@
             [self.contentLabel appenTouchObserverForKeyword:phoneNumber withHanlder:^(NSString *keyword, NSRange keywordRange) {
                 [weakSelf tapOnPhoneNumber:keyword withRange:keywordRange];
             }];
-            
         }
-        
     }
 }
 
 
 //响应点击事件
-- (void)tapOnPhoneNumber:(NSString *)phoneNumber withRange:(NSRange)phoneNumberRange
-{
+/**
+ *  号码点击响应事件
+ *
+ *  @param phoneNumber      号码
+ *  @param phoneNumberRange 号码所在字串range
+ */
+- (void)tapOnPhoneNumber:(NSString *)phoneNumber withRange:(NSRange)phoneNumberRange {
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(textMessageCellDidTapOnPhoneNumber:withPhoneNumber:)]) {
         [self.delegate textMessageCellDidTapOnPhoneNumber:self withPhoneNumber:phoneNumber];
     }
@@ -83,8 +91,12 @@
 
 #pragma mark - 点击超链接响应
 
-- (void)setupTouchEventWithUrlLinkArray:(NSArray *)linkArray
-{
+/**
+ *  设置超链接点击响应事件
+ *
+ *  @param linkArray <#linkArray description#>
+ */
+- (void)setupTouchEventWithUrlLinkArray:(NSArray *)linkArray {
     if (!linkArray) {
         return;
     }
@@ -100,15 +112,17 @@
             [self.contentLabel appenTouchObserverForKeyword:link withHanlder:^(NSString *keyword, NSRange keywordRange) {
                 [weakSelf tapOnUrl:keyword withRange:keywordRange];
             }];
-            
         }
-        
     }
 }
 
-//响应url点击事件
-- (void)tapOnUrl:(NSString *)url withRange:(NSRange)linkRange
-{
+/**
+ *  url响应事件
+ *
+ *  @param url       url字串
+ *  @param linkRange url所在range
+ */
+- (void)tapOnUrl:(NSString *)url withRange:(NSRange)linkRange {
     if (self.delegate && [self.delegate respondsToSelector:@selector(textMessageCellDidTapOnUrl:withUrl:)]) {
         [self.delegate textMessageCellDidTapOnUrl:self withUrl:url];
     }
@@ -116,8 +130,13 @@
 
 #pragma mark - 长按事件继承
 
-- (void)goToShowLongPressMenu:(UILongPressGestureRecognizer *)sender
-{
+/**
+ *  长按显示菜单事件
+ *
+ *  @param sender 长按Gesture
+ */
+- (void)goToShowLongPressMenu:(UILongPressGestureRecognizer *)sender {
+    
     [super goToShowLongPressMenu:sender];
     
     UIMenuController *popMenu = [UIMenuController sharedMenuController];
@@ -135,16 +154,25 @@
     [popMenu setMenuVisible:YES animated:YES];
 }
 
-- (void)copyContent:(UIMenuItem *)item
-{
+/**
+ *  复制菜单事件
+ *
+ *  @param item 复制菜单按钮
+ */
+- (void)copyContent:(UIMenuItem *)item {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     [pasteboard setString:self.contentCopyString];
 }
 
 
 #pragma mark - 设置内容
-- (void)setContentModel:(GJGCChatContentBaseModel *)contentModel
-{
+
+/**
+ *  设置内容
+ *
+ *  @param contentModel 内容Model对象
+ */
+- (void)setContentModel:(GJGCChatContentBaseModel *)contentModel {
     if (!contentModel) {
         return;
     }
@@ -182,15 +210,12 @@
             
             self.contentSize = contentModel.contentSize;
             self.contentLabel.gjcf_size = contentModel.contentSize;
-            
-            
         }else{
             
             CGSize theContentSize = [GJCFCoreTextContentView contentSuggestSizeWithAttributedString:attributedString forBaseContentSize:self.contentLabel.contentBaseSize];
             self.contentSize = theContentSize;
             //        self.contentLabel.gjcf_size = [GJCFCoreTextContentView contentSuggestSizeWithAttributedString:attributedString forBaseContentSize:self.contentLabel.contentBaseSize];
             self.contentLabel.gjcf_size = theContentSize;
-            
         }
         
         self.contentLabel.contentAttributedString = attributedString;
@@ -240,7 +265,8 @@
         
         if (chatContentModel.isFromSelf) {
             self.textRenderCacheImageView.gjcf_right = self.bubbleBackImageView.gjcf_width - 5.5 - self.contentInnerMargin;
-        }else{
+        }
+        else{
             self.textRenderCacheImageView.gjcf_left = self.contentInnerMargin + 5.5;
         }
         
@@ -256,15 +282,14 @@
         
         if (chatContentModel.isFromSelf) {
             self.contentLabel.gjcf_right = self.bubbleBackImageView.gjcf_width - 5.5 - self.contentInnerMargin;
-        }else{
+        }
+        else{
             self.contentLabel.gjcf_left = self.contentInnerMargin + 5.5;
         }
         
         [self adjustContent];
         self.contentLabel.gjcf_centerY = self.bubbleBackImageView.gjcf_height/2;
-        
     }
-
 }
 
 @end

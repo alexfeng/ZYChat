@@ -60,9 +60,18 @@
 @end
 
 @implementation GJCFCoreTextContentView
+/**
+ *  释放资源
+ */
+- (void)dealloc {
+}
 
-- (id)init
-{
+/**
+ *  初始化方法
+ *
+ *  @return
+ */
+- (id)init {
     if (self = [super init]) {
         
         //默认
@@ -71,6 +80,7 @@
     }
     return self;
 }
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -82,13 +92,10 @@
     return self;
 }
 
-- (void)dealloc
-{
-}
+
 
 //设定初始化
-- (void)initState
-{
+- (void)initState {
     self.backgroundColor = [UIColor clearColor];
     self.userInteractionEnabled = NO;//默认没有交互
 
@@ -101,11 +108,9 @@
     self.keywordRangeDict = [[NSMutableDictionary alloc]init];
     self.keywordRadiusDict = [[NSMutableDictionary alloc]init];
     self.realImageInfoArray = [[NSMutableArray alloc]init];
-    
 }
 
-- (void)drawRect:(CGRect)rect
-{
+- (void)drawRect:(CGRect)rect {
     if (!self.contentAttributedString) {
         return;
     }

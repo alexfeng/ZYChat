@@ -19,7 +19,12 @@
 
 @class GJCFCoreTextContentView;
 
-/* 记住block内的对象会被retain */
+/**
+ *  点击处理block（block 内的对象会被retain）
+ *
+ *  @param keyword      <#keyword description#>
+ *  @param keywordRange <#keywordRange description#>
+ */
 typedef void (^GJCFCoreTextContentViewTouchHanlder) (NSString *keyword,NSRange keywordRange);
 
 /* 长按事件捕捉 */

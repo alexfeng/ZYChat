@@ -204,7 +204,7 @@
     
     NSString *mediaType = AVMediaTypeVideo;
     
-     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
     
     if (authStatus !=  AVAuthorizationStatusAuthorized) {
         
