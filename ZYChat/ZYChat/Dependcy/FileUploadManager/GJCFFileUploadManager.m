@@ -73,7 +73,7 @@ static dispatch_queue_t _gjcfFileUploadManagerOperationQueue ;
             _gjcfFileUploadManagerOperationQueue = dispatch_queue_create(GJCFFileUploadManagerQueue.UTF8String, NULL);
         }
         
-        if (![[NSFileManager defaultManager] fileExistsAtPath:[self taskPersistFilePath]]) {
+        if (![GJCFQuickCacheUitil fileExist:[self taskPersistFilePath]]) {
             [self createDefaultPersistFile];
         }
         
@@ -98,7 +98,7 @@ static dispatch_queue_t _gjcfFileUploadManagerOperationQueue ;
         [self setDefaultRequestHeader:[NSDictionary dictionary]];
         [self setDefaultRequestParams:[NSDictionary dictionary]];
         
-        if (![[NSFileManager defaultManager] fileExistsAtPath:[self taskPersistFilePath]]) {
+        if (![GJCFQuickCacheUitil fileExist:[self taskPersistFilePath]]) {
             [self createDefaultPersistFile];
         }
         
@@ -106,16 +106,12 @@ static dispatch_queue_t _gjcfFileUploadManagerOperationQueue ;
     return self;
 }
 
-- (NSString*)taskPersistFilePath
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *lastPath = [paths lastObject];
+- (NSString*)taskPersistFilePath {
+
+    NSString *persistDir = GJCFAppDoucmentPath(GJCFFileUploadManagerTaskPersistDir);
     
-    NSString *persistDir = [lastPath stringByAppendingPathComponent:GJCFFileUploadManagerTaskPersistDir];
-    
-    BOOL isDir = YES;
-    if (![[NSFileManager defaultManager] fileExistsAtPath:persistDir isDirectory:&isDir]) {
-        [[NSFileManager defaultManager]createDirectoryAtPath:persistDir withIntermediateDirectories:YES attributes:nil error:nil];
+    if([GJCFQuickCacheUitil createDirectory:persistDir]) {
+        // TODO:Something
     }
     
     NSString *persistFile = [persistDir stringByAppendingPathComponent:GJCFFileUploadManagerTaskPersistFile];
